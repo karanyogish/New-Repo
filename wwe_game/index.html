@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Championship Ring: Heavyweight Brawler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <!-- 2D Canvas Engine -->
+        <canvas id="fightCanvas" width="1024" height="600"></canvas>
+        
+        <!-- WWE Style Heads Up Display -->
+        <div class="hud">
+            <div class="fighter-card p1">
+                <div class="name">PLAYER ONE</div>
+                <div class="health-bar"><div class="health-fill" id="p1-health"></div></div>
+                <div class="points" id="p1-points">0 PTS</div>
+            </div>
+            
+            <div class="championship-title">
+                <h1>WORLD HEAVYWEIGHT</h1>
+                <div class="timer">ROUND <span id="roundNum">1</span></div>
+                <div class="round-wins">
+                    <span id="p1-wins" style="color: #4dc2ff;">0 WINS</span>
+                    <span id="p2-wins" style="color: #ff3333;">0 WINS</span>
+                </div>
+            </div>
+
+            <div class="fighter-card p2">
+                <div class="name">THE CHAMPION (TOUGH)</div>
+                <div class="health-bar"><div class="health-fill" id="p2-health"></div></div>
+                <div class="points" id="p2-points">0 PTS</div>
+            </div>
+        </div>
+
+        <!-- Pop up for KO between rounds -->
+        <div id="roundSplash" class="round-splash">K.O!</div>
+
+        <!-- Controls Visual -->
+        <div class="controls-overlay">
+            <span><b>A / D</b> = Move</span>
+            <span><b>W</b> = Jump</span>
+            <span><b>J</b> = Punch</span>
+            <span><b>K</b> = Kick</span>
+            <span><b>L</b> = Block</span>
+        </div>
+        
+        <!-- Global Overlay for End of Best of 3 -->
+        <div id="gameOverPanel" class="overlay hidden">
+            <h1 id="goTitle">MATCH OVER</h1>
+            <p id="goSubtitle">THE DUST HAS SETTLED.</p>
+            <button onclick="location.reload()">REMATCH</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

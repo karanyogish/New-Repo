@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Business Invoice Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar no-print">
+            <h1>Metal & Steel Invoice Generator</h1>
+            <div class="actions">
+                <button id="print-btn" class="btn btn-primary"><i class="fas fa-print"></i> Print / Save PDF</button>
+            </div>
+        </header>
+
+        <main class="invoice-wrapper">
+            <div class="invoice-container" id="invoice">
+                <!-- Invoice Header -->
+                <div class="invoice-header">
+                    <div class="company-details">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-industry"></i>
+                            <span contenteditable="true">Ironclad Metals Inc.</span>
+                        </div>
+                        <p contenteditable="true" class="editable">Industrial Park, Lot 42<br>Steel City, SC 40404<br>sales@ironcladmetals.com</p>
+                    </div>
+                    <div class="invoice-title">
+                        <h2>INVOICE</h2>
+                        <div class="invoice-meta">
+                            <div class="meta-item">
+                                <span class="label">Invoice No:</span>
+                                <span contenteditable="true" class="value editable fw-bold">#MTL-26-001</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="label">Date:</span>
+                                <span contenteditable="true" class="value editable">April 8, 2026</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="label">Terms:</span>
+                                <span contenteditable="true" class="value editable">Net 30</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="label">FOB:</span>
+                                <span contenteditable="true" class="value editable">Shipping Point</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Billing Information -->
+                <div class="billing-info">
+                    <div class="bill-to">
+                        <h3>Bill To:</h3>
+                        <p contenteditable="true" class="editable fw-bold" style="font-size: 1.1rem;">Fabrication Works LLC</p>
+                        <p contenteditable="true" class="editable">789 Manufacturer Blvd.<br>Build Town, BT 50505</p>
+                    </div>
+                </div>
+
+                <!-- NEW: Input Form Panel (Hidden on Print) -->
+                <div class="input-form-panel no-print">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-plus-circle"></i> Add Material to Invoice</h3>
+                        <small>Pricing is based per CWT (Hundredweight). Auto-calculated below.</small>
+                    </div>
+                    <form id="material-form" class="form-grid">
+                        <div class="form-group form-col-span-2">
+                            <label>Material / Dimensions</label>
+                            <input type="text" id="input-desc" placeholder="e.g., 304 SS Sheet 11 Ga x 48 x 120" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Grade</label>
+                            <input type="text" id="input-grade" placeholder="e.g., 304" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Heat #</label>
+                            <input type="text" id="input-heat" placeholder="Trace ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Net Wt (lbs)</label>
+                            <input type="number" id="input-weight" min="1" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Base Price ($/CWT)</label>
+                            <input type="number" id="input-price" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Surcharge ($/CWT)</label>
+                            <input type="number" id="input-surcharge" value="0.00" min="0" step="0.01">
+                        </div>
+                        <div class="form-group submit-group form-col-span-1">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-secondary w-full" style="height: 42px;">Add Item</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Items Table (Read-Only Display) -->
+                <div class="table-container">
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th class="col-desc">Material / Dimensions</th>
+                                <th class="col-grade">Grade</th>
+                                <th class="col-heat">Heat #</th>
+                                <th class="col-weight" title="Net Weight in Pounds">Net Wt (lbs)</th>
+                                <th class="col-price" title="Price per 100 lbs">Base ($)</th>
+                                <th class="col-surcharge" title="Alloy/Fuel Surcharge">Surch. ($)</th>
+                                <th class="col-total">Line Total</th>
+                                <th class="col-action no-print"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-body">
+                            <!-- Items injected by JS -->
+                            <tr id="empty-state">
+                                <td colspan="8" class="text-center" style="color: var(--text-muted); padding: 2rem;">No items added yet. Use the form above to add materials.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Invoice Summary -->
+                <div class="invoice-summary">
+                    <div class="notes">
+                        <h3>Notes / Special Instructions</h3>
+                        <p contenteditable="true" class="editable">Material Test Reports (MTRs) are attached with the shipping documentation. All material is guaranteed to meet ASTM standards.</p>
+                        
+                        <div class="weight-summary mt-3">
+                            <p><strong>Total Gross Weight:</strong> <span contenteditable="true" class="editable inline">0</span> lbs <em>(Includes pallets/skids)</em></p>
+                        </div>
+                    </div>
+                    <div class="totals">
+                        <div class="total-row">
+                            <span>Material Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Freight / Delivery:</span>
+                            <span class="currency-input-wrapper">
+                                $<input type="number" id="freight-cost" class="editable-input" value="0.00" min="0" step="0.01">
+                            </span>
+                        </div>
+                        <div class="total-row tax-row">
+                            <span>Tax <span contenteditable="true" id="tax-rate" class="editable">0.0</span>%:</span>
+                            <span id="tax-amount">$0.00</span>
+                        </div>
+                        <div class="total-row grand-total">
+                            <span>Total Due:</span>
+                            <span id="grand-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-note">
+                    <p>Thank you for your business! Title of goods remains with Ironclad Metals Inc. until invoice is paid in full.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

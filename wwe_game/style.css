@@ -1,0 +1,211 @@
+/* style.css: Realistic WWE Ring Aesthetic */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #050505;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 1024px;
+    height: 600px;
+    border: 4px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    background: #000;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+
+/* Heads Up Display */
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.fighter-card {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+.fighter-card.p1 { align-items: flex-start; }
+.fighter-card.p2 { align-items: flex-end; }
+
+.name {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #000;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.p1 .name { color: #4dc2ff; }
+.p2 .name { color: #ff3333; }
+
+.health-bar {
+    width: 100%;
+    height: 35px;
+    background: rgba(30, 30, 30, 0.8);
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    position: relative;
+    overflow: hidden;
+    transform: skewX(-15deg);
+}
+
+.health-fill {
+    width: 100%;
+    height: 100%;
+    transition: width 0.15s ease-out;
+}
+
+.p1 .health-fill { background: linear-gradient(90deg, #1fa2ff, #12d8fa); }
+.p2 .health-fill { background: linear-gradient(90deg, #f72c2c, #ff9f1c); transform-origin: right; float: right; }
+
+.points {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 1px 1px 5px #000;
+    margin-top: 5px;
+}
+
+.championship-title {
+    text-align: center;
+    text-shadow: 2px 2px 10px #000;
+}
+
+.championship-title h1 {
+    font-size: 32px;
+    color: #ffd700;
+    margin: 0;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 5px;
+}
+
+.timer {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 5px;
+}
+
+/* BEST OF 3 WINS TRACKER */
+.round-wins {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    margin: 8px auto 0 auto;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #000;
+}
+
+/* SPLASH SCREEN FOR KO */
+.round-splash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 130px;
+    color: #ffcc00;
+    text-shadow: 0 0 30px #ff0000;
+    pointer-events: none;
+    z-index: 50;
+    display: none;
+}
+
+/* Controls Hint */
+.controls-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    pointer-events: none;
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    text-shadow: 1px 1px 4px #000;
+}
+.controls-overlay b {
+    color: #ffd700;
+}
+
+/* Endgame Overlay */
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(10, 10, 15, 0.95);
+    border: 4px solid #ffd700;
+    padding: 60px 100px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 80px rgba(0,0,0,0.9);
+    z-index: 100;
+}
+
+.overlay.hidden { display: none; }
+
+.overlay h1 {
+    font-size: 70px;
+    color: #ff3333;
+    text-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+    margin-bottom: 10px;
+}
+
+.overlay p {
+    font-size: 28px;
+    color: #ffd700;
+    margin-bottom: 30px;
+}
+
+.overlay button {
+    background: #b20000;
+    color: #fff;
+    border: 2px solid #ff3333;
+    padding: 15px 40px;
+    font-size: 24px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+    letter-spacing: 2px;
+}
+.overlay button:hover {
+    background: #ff3333;
+    box-shadow: 0 0 20px rgba(255,51,51,0.5);
+}
