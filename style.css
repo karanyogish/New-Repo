@@ -1,0 +1,174 @@
+/* style.css: Realistic Racing aesthetic */
+
+:root {
+    --bg-color: #0b0c10;
+    --text-primary: #ffffff;
+    --accent-red: #ff2a2a;
+    --accent-yellow: #ffb700;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #000; 
+}
+
+.game-container {
+    position: relative;
+    border: 6px solid #222;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 42, 0.4);
+    background: #000;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    max-width: 1024px;
+    height: auto;
+    border-radius: 14px;
+}
+
+.hud {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.timer, .speedometer {
+    background: rgba(10, 10, 15, 0.85);
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    text-transform: uppercase;
+}
+
+.timer {
+    border-bottom: 4px solid #00bbff; /* cyan for fuel */
+}
+
+.timer span#fuelVal {
+    color: #00bbff;
+    font-size: 42px;
+    font-weight: 900;
+    margin: 0 10px;
+    text-shadow: 0 0 10px rgba(0, 187, 255, 0.4);
+}
+
+.speedometer {
+    border-left: 4px solid var(--accent-red);
+}
+
+.speedometer span#speedVal {
+    color: var(--accent-yellow);
+    font-size: 42px;
+    font-weight: 900;
+    margin: 0 10px;
+    text-shadow: 0 0 10px rgba(255, 183, 0, 0.4);
+}
+
+.instructions {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2rem;
+    pointer-events: none;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.instructions b {
+    color: var(--accent-yellow);
+    font-size: 1.5rem;
+}
+
+/* Animations for crashes and checkpoints */
+.crash-flash {
+    animation: flash 0.15s ease-out;
+}
+@keyframes flash {
+    0% { filter: invert(1) hue-rotate(180deg); opacity: 0.5;}
+    100% { filter: invert(0) hue-rotate(0deg);  opacity: 1;}
+}
+
+.fuel-flash {
+    animation: fuel-flash-anim 0.3s ease-out;
+}
+@keyframes fuel-flash-anim {
+    0% { box-shadow: inset 0 0 300px #00ff00; }
+    100% { box-shadow: inset 0 0 0px transparent; }
+}
+
+/* Game Over Overlay */
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(11, 12, 16, 0.95);
+    padding: 50px 80px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 50px var(--accent-red);
+    border: 3px solid var(--accent-yellow);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.overlay.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.overlay h2 {
+    font-size: 3.5rem;
+    color: var(--accent-yellow);
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px var(--accent-red);
+}
+
+.overlay button {
+    background: #000;
+    color: #fff;
+    border: 2px solid var(--accent-yellow);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s ease;
+}
+
+.overlay button:hover {
+    background: var(--accent-yellow);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-yellow);
+}

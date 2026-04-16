@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superbike Pro RACING - Checkpoint Run</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Canvas for our pseudo 3D engine -->
+        <canvas id="gameCanvas" width="1024" height="768"></canvas>
+        
+        <!-- On-Screen Display HUD -->
+        <div class="hud">
+            <div class="timer">
+                FUEL <span id="fuelVal">100</span><span style="font-size:16px;">%</span>
+            </div>
+            <div class="speedometer">
+                SPD <span id="speedVal">0</span><span style="font-size: 16px; color: #fff;">KM/H</span>
+            </div>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div id="gameOverPanel" class="overlay hidden">
+            <h2 id="goTitle">RACE OVER</h2>
+            <button onclick="location.reload()">PLAY AGAIN</button>
+        </div>
+        
+        <div class="instructions">
+            <b>↑</b> Accelerate &nbsp;&nbsp;&nbsp; <b>↓</b> Brake &nbsp;&nbsp;&nbsp; <b>← / →</b> Steer <br>
+            <span style="font-size:14px; opacity:0.8; color:#00ffcc; text-transform: none;">Pass the Blue Checkpoints to refill your fuel. Beat the Rival to the Final Destination!</span>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
